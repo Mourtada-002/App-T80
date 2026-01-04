@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:tutoapp/pages/home/home.dart';
 import 'package:tutoapp/splash_screen.dart';
 
 void main() => runApp(MyApp());
@@ -12,7 +11,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'T80',
       debugShowCheckedModeBanner: false,
-      // home: HomePage(),
       home: const SplashScreen(),
     );
   }

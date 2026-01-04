@@ -41,18 +41,20 @@ dev_dependencies:
     sdk: flutter
 
   flutter_launcher_icons: ^0.13.1
+  flutter_lints: ^6.0.0
 
 flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/logo.png"
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
-  flutter_lints: ^6.0.0
+# The "flutter_lints" package below contains a set of recommended lints to
+# encourage good coding practices. The lint set provided by the package is
+# activated in the `analysis_options.yaml` file located at the root of your
+# package. See that file for information about deactivating specific lint
+# rules and activating additional ones.
+
+  
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -72,8 +74,12 @@ flutter:
   assets:
   - assets/logo.png
   - assets/icone.png
-  - assets/logo 2.png
-  - assets/mercedes.png
+  - assets/Photo-Profil.jpeg
+  - assets/logo-2.png
+  - assets/logo-3.png
+  - assets/rolls-royce.png
+  - assets/mercedes-GLE.png
+  - assets/ford-mustang.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

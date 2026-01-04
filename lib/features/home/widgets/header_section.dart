@@ -27,7 +27,7 @@ class HeaderSection extends StatelessWidget {
               children: [
                 // Logo T80
                 Image.asset(
-                  'assets/logo 2.png',
+                  'assets/logo-2.png',
                   width: 100,
                   height: 60,
                   fit: BoxFit.contain,
@@ -92,10 +92,11 @@ class HeaderSection extends StatelessWidget {
               child: Container(
                 height: 48,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
+                  color: Color(0xFFF5F5F5),
+                  borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
+                      // ignore: deprecated_member_use
                       color: Colors.black.withOpacity(0.1),
                       blurRadius: 4,
                       offset: const Offset(0, 2),
@@ -115,7 +116,7 @@ class HeaderSection extends StatelessWidget {
                       child: Text(
                         'Recherche...', // Simple texte au lieu de TextField
                         style: TextStyle(
-                          color: Colors.grey[600], // Gris foncé pour le texte
+                          color: Colors.grey[700], // Gris foncé pour le texte
                           fontSize: 16, // Plus grand pour meilleure lisibilité
                         ),
                       ),
@@ -132,23 +133,13 @@ class HeaderSection extends StatelessWidget {
           // Texte "Acheter une Voiture, une moto avec T80"
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.white,
-                  size: 14, // Légèrement plus grand
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  'Acheter une Voiture, une moto avec T80',
-                  style: const TextStyle(
-                    color: Colors.white, // Blanc pur
-                    fontSize: 14, // Augmenté de 12 à 14
-                    fontWeight: FontWeight.w500, // Légèrement plus gras
-                  ),
-                ),
-              ],
+            child: Text(
+              'Acheter une Voiture, une moto avec T80',
+              style: const TextStyle(
+                color: Colors.white, // Blanc pur
+                fontSize: 14, // Augmenté de 12 à 14
+                fontWeight: FontWeight.w500, // Légèrement plus gras
+              ),
             ),
           ),
         ],

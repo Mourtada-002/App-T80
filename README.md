@@ -1,16 +1,21 @@
-# tutoapp
+# T80 🚗
 
-A new Flutter project.
+T80 est une application mobile développée avec **Flutter** pour la vente et l'achat de voitures. Elle permet aux utilisateurs de parcourir, rechercher et acheter des véhicules directement depuis leur smartphone.
 
-## Getting Started
+## À propos du projet
 
-This project is a starting point for a Flutter application.
+Ce projet est conçu comme une application mobile de commerce automobile moderne et intuitive. Il inclut les fonctionnalités suivantes :
 
-A few resources to get you started if this is your first Flutter project:
+- Parcourir les voitures disponibles
+- Rechercher des voitures par marque, modèle ou prix
+- Consulter les détails de chaque véhicule
+- Ajouter des véhicules aux favoris
+- Contact direct avec les vendeurs
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Installation et lancement
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Pour exécuter cette application en local, vous devez avoir **Flutter** installé sur votre machine. Ensuite, suivez ces étapes :
+
+1. Cloner le dépôt :
+   ```bash
+   git clone <lien-de-ton-repo>

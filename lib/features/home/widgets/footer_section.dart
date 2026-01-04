@@ -1,39 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:tutoapp/pages/home/widgets/body.dart';
-import 'package:tutoapp/pages/home/widgets/header.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class FooterSection extends StatelessWidget {
+  final int selectedIndex;
+  final Function(int) onItemTapped;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column( // ← Déplacez Column ici, dans le body
-        children: [
-          HeaderSection(),
-          BodySection(),
-        ],
-      ),
-      bottomNavigationBar: const NavigationBar(),
-    );
-  }
-}
-
-class NavigationBar extends StatefulWidget {
-  const NavigationBar({super.key});
-
-  @override
-  State<NavigationBar> createState() => _NavigationBarState();
-}
-
-class _NavigationBarState extends State<NavigationBar> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  const FooterSection({
+    super.key,
+    required this.selectedIndex,
+    required this.onItemTapped,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +35,8 @@ class _NavigationBarState extends State<NavigationBar> {
         ),
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
+          currentIndex: selectedIndex,
+          onTap: onItemTapped,
           selectedItemColor: const Color(0xFF0CC0DF),
           unselectedItemColor: Colors.grey[600],
           showSelectedLabels: true,
@@ -75,14 +50,14 @@ class _NavigationBarState extends State<NavigationBar> {
           ),
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
+              icon: Icon(Icons.directions_car_outlined),
+              activeIcon: Icon(Icons.directions_car),
               label: 'Accueil',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.favorite_border),
               activeIcon: Icon(Icons.favorite),
-              label: 'Favori',
+              label: 'Favoris',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.message_outlined),
