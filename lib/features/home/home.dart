@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tutoapp/features/account/account_page.dart';
-import 'package:tutoapp/features/favoris/favoris.dart';
-import 'package:tutoapp/features/home/widgets/header_section.dart';
-import 'package:tutoapp/features/home/widgets/body_section.dart';
-import 'package:tutoapp/features/home/widgets/footer_section.dart';
-import 'package:tutoapp/features/messages/messages_page.dart';
+import 'package:t80/features/account/account_page.dart';
+import 'package:t80/features/favoris/favoris.dart';
+import 'package:t80/features/home/widgets/header_section.dart';
+import 'package:t80/features/home/widgets/body_section.dart';
+import 'package:t80/features/home/widgets/footer_section.dart';
+import 'package:t80/features/messages/messages_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
 
   // Liste des pages principales
   List<Widget> get _pages => [
-    // Page Accueil
+    // Page Accueil avec HeaderSection
     Column(
       children: [
         const HeaderSection(),
@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
         });
       },
     ),
-    // Page Compte
+    // Page Compte (maintenant accessible depuis HeaderSection)
     AccountPage(
       onBackPressed: () {
         setState(() {

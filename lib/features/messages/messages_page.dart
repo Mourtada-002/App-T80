@@ -25,13 +25,13 @@ class MessagesPage extends StatelessWidget {
               BoxShadow(
                 color: Colors.black26,
                 blurRadius: 6,
-                offset: const Offset(0, 2),
+                offset: Offset(0, 2),
               ),
             ],
           ),
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,7 +52,7 @@ class MessagesPage extends StatelessWidget {
                   ),
                   
                   // Texte "Discussions" au centre
-                  const Text(
+                  Text(
                     'Discussions',
                     style: TextStyle(
                       fontSize: 22,
@@ -130,7 +130,7 @@ class MessagesPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Color.fromRGBO(0, 0, 0, 0.1),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -147,7 +147,7 @@ class MessagesPage extends StatelessWidget {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF0CC0DF).withOpacity(0.2),
+                  color: Color.fromRGBO(12, 192, 223, 0.2),
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: const Center(

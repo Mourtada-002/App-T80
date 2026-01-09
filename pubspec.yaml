@@ -1,4 +1,4 @@
-name: tutoapp
+name: t80
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -35,6 +35,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   flutter_native_splash: ^2.4.7
+  image_picker: ^0.8.7+4
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:
@@ -46,7 +48,12 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/logo.png"
+  image_path: "assets/app_icon.png"
+  image_path_android: "assets/app_icon.png"
+  image_path_ios: "assets/app_icon.png"
+  android_adaptive_icon_foreground: "assets/icon_foreground.png"
+  android_adaptive_icon_background: "#0CC0DF"
+  remove_alpha_ios: true
 
 # The "flutter_lints" package below contains a set of recommended lints to
 # encourage good coding practices. The lint set provided by the package is
@@ -72,14 +79,12 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
+  - assets/app_icon.png
+  - assets/icon_foreground.png
   - assets/logo.png
-  - assets/icone.png
-  - assets/Photo-Profil.jpeg
   - assets/logo-2.png
   - assets/logo-3.png
   - assets/rolls-royce.png
-  - assets/mercedes-GLE.png
-  - assets/ford-mustang.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

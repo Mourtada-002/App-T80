@@ -1,10 +1,18 @@
+// features/home/widgets/body_section.dart
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:t80/features/home/create_post_page.dart';
+import 'package:t80/post_manager.dart';
 
 class BodySection extends StatelessWidget {
   const BodySection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final postManager = Provider.of<PostManager>(context);
+    final posts = postManager.allPosts;
+
     return Container(
       color: const Color(0xFFF5F5F5),
       child: SingleChildScrollView(
@@ -19,7 +27,6 @@ class BodySection extends StatelessWidget {
                 right: 16,
               ),
               decoration: BoxDecoration(
-                // ignore: deprecated_member_use
                 color: const Color(0xFF0CC0DF).withOpacity(0.2),
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -97,7 +104,7 @@ class BodySection extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            // NOUVELLE SECTION : 3 images + bouton "+" sur la même ligne
+            // SECTION : 3 images + bouton "+" pour créer un post
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Container(
@@ -110,8 +117,7 @@ class BodySection extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      // ignore: deprecated_member_use
-                      color: Colors.black.withOpacity(0.05),
+                      color: const Color.fromRGBO(0, 0, 0, 0.05),
                       blurRadius: 8,
                       offset: const Offset(0, 4),
                     ),
@@ -120,17 +126,20 @@ class BodySection extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Première image
                     _buildImageCard('assets/logo-3.png'),
-                    
-                    // Deuxième image
-                    _buildImageCard('assets/image2.jpg'),
-                    
-                    // Troisième image
-                    _buildImageCard('assets/image3.jpg'),
-                    
-                    // Bouton "+" bleu
-                    _buildPlusButton(),
+                    _buildBlueBox(),
+                    _buildBlueBox(),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CreatePostPage(),
+                          ),
+                        );
+                      },
+                      child: _buildPlusButton(),
+                    ),
                   ],
                 ),
               ),
@@ -138,21 +147,57 @@ class BodySection extends StatelessWidget {
             
             const SizedBox(height: 24),
             
-            // Carte Ford Mustang
-            _buildCarCard(
-              carName: 'Ford Mustang',
-              price: '28.000.000 Fcfa',
-              imageUrl: 'assets/ford-mustang.png',
-            ),
+            // LISTE DES POSTS DYNAMIQUES
+            if (posts.isNotEmpty)
+              ...posts.map((post) => _buildPostCard(post, context)),
             
-            const SizedBox(height: 16),
-            
-            // Carte Mercedes GLE 53
-            _buildCarCard(
-              carName: 'Mercedes GLE 53',
-              price: '95.000.000 Fcfa',
-              imageUrl: 'assets/mercedes-GLE.png',
-            ),
+            if (posts.isEmpty)
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(32),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromRGBO(0, 0, 0, 0.05),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.car_rental,
+                          size: 60,
+                          color: Colors.grey[400],
+                        ),
+                        const SizedBox(height: 16),
+                        const Text(
+                          'Aucun véhicule disponible',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          'Soyez le premier à publier une annonce !',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             
             const SizedBox(height: 40),
           ],
@@ -161,7 +206,6 @@ class BodySection extends StatelessWidget {
     );
   }
 
-  // Widget pour les cartes d'images avec nouvelles dimensions
   Widget _buildImageCard(String imagePath) {
     return Container(
       width: 51,
@@ -171,8 +215,7 @@ class BodySection extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            // ignore: deprecated_member_use
-            color: Colors.black.withOpacity(0.1),
+            color: const Color.fromRGBO(0, 0, 0, 0.1),
             blurRadius: 3,
             offset: const Offset(0, 2),
           ),
@@ -200,7 +243,24 @@ class BodySection extends StatelessWidget {
     );
   }
 
-  // Widget pour le bouton "+" avec nouvelles dimensions
+  Widget _buildBlueBox() {
+    return Container(
+      width: 51,
+      height: 51,
+      decoration: BoxDecoration(
+        color: const Color(0xFF0CC0DF).withOpacity(0.2),
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: [
+          BoxShadow(
+            color: const Color.fromRGBO(0, 0, 0, 0.1),
+            blurRadius: 3,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildPlusButton() {
     return Container(
       width: 51,
@@ -210,8 +270,7 @@ class BodySection extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            // ignore: deprecated_member_use
-            color: const Color(0xFF0CC0DF).withOpacity(0.3),
+            color: const Color.fromRGBO(12, 192, 223, 0.3),
             blurRadius: 6,
             offset: const Offset(0, 3),
           ),
@@ -227,22 +286,19 @@ class BodySection extends StatelessWidget {
     );
   }
 
-  // Widget pour les cartes de voiture MODIFIÉ
-  Widget _buildCarCard({
-    required String carName,
-    required String price,
-    required String imageUrl,
-  }) {
+  // Widget pour les cartes de post AVEC CARROUSEL CORRIGÉ
+  Widget _buildPostCard(Post post, BuildContext context) {
+    final postManager = Provider.of<PostManager>(context, listen: false);
+    
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              // ignore: deprecated_member_use
-              color: Colors.black.withOpacity(0.1),
+              color: const Color.fromRGBO(0, 0, 0, 0.1),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -252,91 +308,247 @@ class BodySection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: 180,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12),
-                  topRight: Radius.circular(12),
-                ),
-                color: Colors.grey[200],
-              ),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12),
-                  topRight: Radius.circular(12),
-                ),
-                child: Image.asset(
-                  imageUrl,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      color: Colors.grey[300],
-                      child: const Center(
-                        child: Icon(
-                          Icons.car_rental,
-                          size: 60,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
+            // CARROUSEL D'IMAGES
+            _buildImageCarousel(post),
             
-            // Section avec nom, prix et coeur
+            // Infos du post
             Padding(
               padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Partie gauche : Nom et prix
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          carName,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87,
-                          ),
+                  // Titre, prix et cœur (à sa place originale)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              post.title,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              post.formattedPrice,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF0CC0DF),
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 8),
-                        Text(
-                          price,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFF0CC0DF),
-                          ),
+                      ),
+                      
+                      // Cœur favoris (à sa place originale)
+                      IconButton(
+                        onPressed: () {
+                          postManager.toggleFavorite(post.id);
+                        },
+                        icon: Icon(
+                          post.isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color: post.isFavorite ? Colors.red : const Color(0xFF0CC0DF),
+                          size: 28,
                         ),
-                      ],
-                    ),
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                      ),
+                    ],
                   ),
                   
-                  // Partie droite : Coeur favoris
-                  Container(
-                    margin: const EdgeInsets.only(left: 16),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.favorite_border,
-                        color: Color(0xFF0CC0DF),
-                        size: 28,
-                      ),
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
+                  const SizedBox(height: 12),
+                  
+                  // Description
+                  Text(
+                    post.description,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[700],
                     ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  
+                  const SizedBox(height: 12),
+                  
+                  // Infos supplémentaires
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: post.isNew 
+                              ? const Color.fromRGBO(12, 192, 223, 0.1)
+                              : const Color.fromRGBO(255, 193, 7, 0.1),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text(
+                          post.condition,
+                          style: TextStyle(
+                            color: post.isNew 
+                                ? const Color(0xFF0CC0DF)
+                                : Colors.amber[800],
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      
+                      const SizedBox(width: 8),
+                      
+                      Icon(
+                        Icons.location_on,
+                        size: 16,
+                        color: Colors.grey[600],
+                      ),
+                      
+                      const SizedBox(width: 4),
+                      
+                      Text(
+                        post.location,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
+                  ),
+                  
+                  const SizedBox(height: 8),
+                  
+                  // Catégories
+                  Wrap(
+                    spacing: 8,
+                    children: post.categories.map((category) {
+                      return Chip(
+                        label: Text(
+                          category,
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                        backgroundColor: Colors.grey[100],
+                      );
+                    }).toList(),
                   ),
                 ],
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  // Nouvelle méthode pour le carrousel
+  Widget _buildImageCarousel(Post post) {
+    return StatefulBuilder(
+      builder: (context, setState) {
+        final PageController _pageController = PageController();
+        int _currentPage = 0;
+        
+        return SizedBox(
+          height: 300,
+          width: double.infinity,
+          child: Stack(
+            children: [
+              // PageView pour le carrousel
+              post.images.isNotEmpty
+                  ? PageView.builder(
+                      controller: _pageController,
+                      itemCount: post.images.length,
+                      onPageChanged: (index) {
+                        setState(() {
+                          _currentPage = index;
+                        });
+                      },
+                      itemBuilder: (context, index) {
+                        return ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(12),
+                            topRight: Radius.circular(12),
+                          ),
+                          child: _buildPostImage(post.images[index]),
+                        );
+                      },
+                    )
+                  : _buildImagePlaceholder(),
+              
+              // Indicateurs de page (les petits points)
+              if (post.images.length > 1)
+                Positioned(
+                  bottom: 10,
+                  left: 0,
+                  right: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      post.images.length,
+                      (index) => Container(
+                        width: 8,
+                        height: 8,
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _currentPage == index
+                              ? Colors.white
+                              : Colors.white.withOpacity(0.5),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildPostImage(String imagePath) {
+    try {
+      if (imagePath.startsWith('/')) {
+        return Image.file(
+          File(imagePath),
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: 300,
+          errorBuilder: (context, error, stackTrace) {
+            return _buildImagePlaceholder();
+          },
+        );
+      } else {
+        return Image.asset(
+          imagePath,
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: 300,
+          errorBuilder: (context, error, stackTrace) {
+            return _buildImagePlaceholder();
+          },
+        );
+      }
+    } catch (e) {
+      return _buildImagePlaceholder();
+    }
+  }
+
+  Widget _buildImagePlaceholder() {
+    return Container(
+      color: Colors.grey[300],
+      height: 300,
+      child: const Center(
+        child: Icon(
+          Icons.car_rental,
+          size: 60,
+          color: Colors.grey,
         ),
       ),
     );

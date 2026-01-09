@@ -1,6 +1,6 @@
 {
-    "name": "tutoapp",
-    "short_name": "tutoapp",
+    "name": "T80",
+    "short_name": "T80",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

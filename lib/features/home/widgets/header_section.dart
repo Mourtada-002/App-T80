@@ -1,148 +1,195 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'package:t80/profile_manager.dart';
+import 'package:t80/features/account/account_page.dart';
 class HeaderSection extends StatelessWidget {
   const HeaderSection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final profileManager = Provider.of<ProfileManager>(context);
+    final userProfile = profileManager.userProfile;
+    
     return Container(
       padding: EdgeInsets.only(
-        top: MediaQuery.of(context).padding.top,
-        bottom: 16, // Augmenté pour plus d'espace
+        top: MediaQuery.of(context).padding.top + 8,
+        bottom: 16,
       ),
       decoration: const BoxDecoration(
         color: Color(0xFF0CC0DF),
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(12), // Bordure arrondie en bas
+          bottomLeft: Radius.circular(12),
           bottomRight: Radius.circular(12),
         ),
       ),
       child: Column(
         children: [
-          // Première ligne avec logo T80 et icône de compte
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Logo T80
-                Image.asset(
-                  'assets/logo-2.png',
-                  width: 100,
-                  height: 60,
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Image.asset(
-                      'assets/icone.png',
-                      width: 100,
-                      height: 60,
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          color: Colors.white,
-                          padding: const EdgeInsets.all(8),
-                          child: const Text(
-                            'T80',
-                            style: TextStyle(
-                              color: Color(0xFF0CC0DF),
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
-                
-                // Icône de compte
-                GestureDetector(
-                  onTap: () {
-                    // Action pour le compte
-                  },
-                  child: Image.asset(
-                    'assets/icone.png',
-                    width: 80,
-                    height: 60,
-                    fit: BoxFit.contain,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Icon(
-                        Icons.person_outline,
-                        color: Colors.white,
-                        size: 28,
-                      );
-                    },
-                  ),
-                ),
+                _buildLogo(),
+                _buildProfileAvatar(context, userProfile.profileImage),
               ],
             ),
           ),
           
-          const SizedBox(height: 16), // Augmenté l'espace
+          const SizedBox(height: 16),
           
           // Barre de recherche cliquable
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: GestureDetector(
               onTap: () {
-                // Action quand on clique sur la barre de recherche
-                print('Barre de recherche cliquée');
-                // Vous pouvez ajouter une navigation vers la page de recherche ici
+                debugPrint('Barre de recherche cliquée');
               },
               child: Container(
                 height: 48,
                 decoration: BoxDecoration(
-                  color: Color(0xFFF5F5F5),
+                  color: const Color(0xFFF5F5F5),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      // ignore: deprecated_member_use
-                      color: Colors.black.withOpacity(0.1),
+                      color: Color.fromRGBO(0, 0, 0, 0.1),
                       blurRadius: 4,
                       offset: const Offset(0, 2),
                     ),
                   ],
                 ),
-                child: Row(
+                child: const Row(
                   children: [
-                    const SizedBox(width: 16), // Augmenté le padding
-                    const Icon(
+                    SizedBox(width: 16),
+                    Icon(
                       Icons.search,
-                      color: Color(0xFF0CC0DF), // Bleu comme le fond
-                      size: 22, // Légèrement plus grand
+                      color: Color(0xFF0CC0DF),
+                      size: 22,
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12),
                     Expanded(
                       child: Text(
-                        'Recherche...', // Simple texte au lieu de TextField
+                        'Recherche...',
                         style: TextStyle(
-                          color: Colors.grey[700], // Gris foncé pour le texte
-                          fontSize: 16, // Plus grand pour meilleure lisibilité
+                          color: Colors.grey,
+                          fontSize: 16,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16),
                   ],
                 ),
               ),
             ),
           ),
           
-          const SizedBox(height: 20), // Plus d'espace avant le texte
+          const SizedBox(height: 20),
           
-          // Texte "Acheter une Voiture, une moto avec T80"
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               'Acheter une Voiture, une moto avec T80',
               style: const TextStyle(
-                color: Colors.white, // Blanc pur
-                fontSize: 14, // Augmenté de 12 à 14
-                fontWeight: FontWeight.w500, // Légèrement plus gras
+                color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildLogo() {
+    return SizedBox(
+      width: 100,
+      height: 60,
+      child: Image.asset(
+        'assets/logo-2.png',
+        fit: BoxFit.contain,
+        errorBuilder: (context, error, stackTrace) {
+          return Image.asset(
+            'assets/icone.png',
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                padding: const EdgeInsets.all(8),
+                child: const Text(
+                  'T80',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildProfileAvatar(BuildContext context, File? imageFile) {
+    return GestureDetector(
+      onTap: () {
+        // Naviguer vers AccountPage quand on clique sur l'avatar
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AccountPage(
+              onBackPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+        );
+      },
+      child: Container(
+        width: 50,
+        height: 50,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white,
+          border: Border.all(
+            color: Colors.white,
+            width: 2,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.1),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: ClipOval(
+          child: imageFile != null
+              ? Image.file(
+                  imageFile,
+                  fit: BoxFit.cover,
+                  width: 50,
+                  height: 50,
+                  errorBuilder: (context, error, stackTrace) {
+                    return _buildDefaultProfileIcon();
+                  },
+                )
+              : _buildDefaultProfileIcon(),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDefaultProfileIcon() {
+    return Container(
+      color: const Color(0xFFF5F5F5),
+      child: const Center(
+        child: Icon(
+          Icons.person_outline,
+          color: Color(0xFF0CC0DF),
+          size: 28,
+        ),
       ),
     );
   }

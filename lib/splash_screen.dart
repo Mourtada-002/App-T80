@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tutoapp/features/home/home.dart';
+import 'package:t80/features/home/home.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
